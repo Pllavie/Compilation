@@ -18,7 +18,7 @@ YACC = yacc -d									#Yacc
 SRC =											#Le dossier des sources
 DEPS = ensemble.h y.tab.h						#Les dépendances à inclure (Fichier h spécifique ou dossier include/*.h)
 CFLAGS = -W -Wall								#Les flags pour la compilation classique
-LDFLAGS = -lfl	$(CFLAGS)								#Les flags pour lex et yacc
+LDFLAGS = -lfl $(CFLAGS)								#Les flags pour lex et yacc
 
 # Création de l'executable Out
 all: lex.yy.c y.tab.c $(OBJS)

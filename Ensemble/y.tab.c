@@ -23,12 +23,13 @@ static const char yysccsid[] = "@(#)yaccpar	1.9 (Berkeley) 02/21/93";
 #include <stdlib.h>
 #include "ensemble.h"
 #include "y.tab.h"
+#include "ensemble.l"
 int yylex();
 void yyerror (char const *s) {
 fprintf (stderr, "%s\n", s);
  }
 ensemble tab[1024];
-#line 17 "ensemble.y"
+#line 18 "ensemble.y"
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
@@ -41,7 +42,7 @@ typedef union{
 	struct {unsigned int e;char n;} ens;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
-#line 44 "y.tab.c"
+#line 45 "y.tab.c"
 
 /* compatibility with bison */
 #ifdef YYPARSE_PARAM
@@ -234,7 +235,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 107 "ensemble.y"
+#line 108 "ensemble.y"
 int main(int argc, char *argv[])
 {
 	initTable(tab);
@@ -243,7 +244,7 @@ int main(int argc, char *argv[])
     printTable(tab);
     return 0;
 }
-#line 246 "y.tab.c"
+#line 247 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -450,27 +451,27 @@ yyreduce:
     switch (yyn)
     {
 case 3:
-#line 39 "ensemble.y"
+#line 40 "ensemble.y"
 	{
 									tab[yystack.l_mark[-2].nom]->nom = yystack.l_mark[-2].nom;
 									tab[yystack.l_mark[-2].nom]->valeur = yystack.l_mark[0].ens.e;
 								}
 break;
 case 4:
-#line 43 "ensemble.y"
+#line 44 "ensemble.y"
 	{
 				tab[yystack.l_mark[0].nom]->nom = yystack.l_mark[0].nom;
 				print_ensemble(tab[yystack.l_mark[0].nom]);
 			}
 break;
 case 5:
-#line 49 "ensemble.y"
+#line 50 "ensemble.y"
 	{
 						yyval.ens.e=yystack.l_mark[0].ens.e;
 						}
 break;
 case 6:
-#line 52 "ensemble.y"
+#line 53 "ensemble.y"
 	{
 														int op = yystack.l_mark[-1].val;
 														switch(op) {
@@ -492,7 +493,7 @@ case 6:
 													}
 break;
 case 7:
-#line 71 "ensemble.y"
+#line 72 "ensemble.y"
 	{
 											if(yystack.l_mark[-1].val==COMP)
 											{
@@ -501,51 +502,51 @@ case 7:
 											}
 break;
 case 8:
-#line 79 "ensemble.y"
+#line 80 "ensemble.y"
 	{yyval.val=UNION;}
 break;
 case 9:
-#line 80 "ensemble.y"
+#line 81 "ensemble.y"
 	{yyval.val=INTER;}
 break;
 case 10:
-#line 81 "ensemble.y"
+#line 82 "ensemble.y"
 	{yyval.val=DIFF;}
 break;
 case 11:
-#line 84 "ensemble.y"
+#line 85 "ensemble.y"
 	{yyval.val=COMP;}
 break;
 case 12:
-#line 87 "ensemble.y"
+#line 88 "ensemble.y"
 	{
 			yyval.ens.e=tab[yystack.l_mark[0].nom]->valeur;
 			yyval.ens.n=yystack.l_mark[0].nom;
 			}
 break;
 case 13:
-#line 91 "ensemble.y"
+#line 92 "ensemble.y"
 	{yyval.ens.e=yystack.l_mark[0].ens.e;}
 break;
 case 14:
-#line 94 "ensemble.y"
+#line 95 "ensemble.y"
 	{ }
 break;
 case 15:
-#line 95 "ensemble.y"
+#line 96 "ensemble.y"
 	{yyval.ens.e=yystack.l_mark[0].ens.e;}
 break;
 case 16:
-#line 98 "ensemble.y"
+#line 99 "ensemble.y"
 	{yyval.ens.e=my_union(yyval.ens.e,yystack.l_mark[0].val);}
 break;
 case 17:
-#line 99 "ensemble.y"
+#line 100 "ensemble.y"
 	{
 											yyval.ens.e=my_union(my_union(yyval.ens.e,yystack.l_mark[-1].val),yystack.l_mark[0].ens.e);/*Noter $2 et non $3*/
 											}
 break;
-#line 548 "y.tab.c"
+#line 549 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;
