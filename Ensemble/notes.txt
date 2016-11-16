@@ -1,0 +1,1 @@
+Syntaxe $1.val = $1<val>
