@@ -22,14 +22,30 @@ static const char yysccsid[] = "@(#)yaccpar	1.9 (Berkeley) 02/21/93";
 #include <stdio.h>
 #include <stdlib.h>
 #include "ensemble.h"
-#include "y.tab.h"
-#include "ensemble.l"
 int yylex();
 void yyerror (char const *s) {
 fprintf (stderr, "%s\n", s);
  }
 ensemble tab[1024];
-#line 18 "ensemble.y"
+#define SIZE 1024 /*Taille suffisante pour éviter les collision (en fonction du nombre d'identificateur)*/
+
+void initTable(ensemble* tab){
+	int i = 0;
+	while(i < SIZE){
+		tab[i] = new_ensemble('o',0);
+		i++;
+	}
+}
+
+void printTable(ensemble* tab){
+	printf("PRINT TABLE");
+	int i = 0;
+	while(i < SIZE){
+		if(tab[i]->nom!='o') print_ensemble(tab[i]);
+		i++;
+	}
+}
+#line 34 "ensemble.y"
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
@@ -42,7 +58,7 @@ typedef union{
 	struct {unsigned int e;char n;} ens;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
-#line 45 "y.tab.c"
+#line 61 "y.tab.c"
 
 /* compatibility with bison */
 #ifdef YYPARSE_PARAM
@@ -235,8 +251,8 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 108 "ensemble.y"
-int main(int argc, char *argv[])
+#line 124 "ensemble.y"
+int main()
 {
 	initTable(tab);
     printf("Entrez une chaine :\n");
@@ -244,7 +260,7 @@ int main(int argc, char *argv[])
     printTable(tab);
     return 0;
 }
-#line 247 "y.tab.c"
+#line 263 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -451,27 +467,27 @@ yyreduce:
     switch (yyn)
     {
 case 3:
-#line 40 "ensemble.y"
+#line 56 "ensemble.y"
 	{
 									tab[yystack.l_mark[-2].nom]->nom = yystack.l_mark[-2].nom;
 									tab[yystack.l_mark[-2].nom]->valeur = yystack.l_mark[0].ens.e;
 								}
 break;
 case 4:
-#line 44 "ensemble.y"
+#line 60 "ensemble.y"
 	{
 				tab[yystack.l_mark[0].nom]->nom = yystack.l_mark[0].nom;
 				print_ensemble(tab[yystack.l_mark[0].nom]);
 			}
 break;
 case 5:
-#line 50 "ensemble.y"
+#line 66 "ensemble.y"
 	{
 						yyval.ens.e=yystack.l_mark[0].ens.e;
 						}
 break;
 case 6:
-#line 53 "ensemble.y"
+#line 69 "ensemble.y"
 	{
 														int op = yystack.l_mark[-1].val;
 														switch(op) {
@@ -493,7 +509,7 @@ case 6:
 													}
 break;
 case 7:
-#line 72 "ensemble.y"
+#line 88 "ensemble.y"
 	{
 											if(yystack.l_mark[-1].val==COMP)
 											{
@@ -502,51 +518,51 @@ case 7:
 											}
 break;
 case 8:
-#line 80 "ensemble.y"
+#line 96 "ensemble.y"
 	{yyval.val=UNION;}
 break;
 case 9:
-#line 81 "ensemble.y"
+#line 97 "ensemble.y"
 	{yyval.val=INTER;}
 break;
 case 10:
-#line 82 "ensemble.y"
+#line 98 "ensemble.y"
 	{yyval.val=DIFF;}
 break;
 case 11:
-#line 85 "ensemble.y"
+#line 101 "ensemble.y"
 	{yyval.val=COMP;}
 break;
 case 12:
-#line 88 "ensemble.y"
+#line 104 "ensemble.y"
 	{
 			yyval.ens.e=tab[yystack.l_mark[0].nom]->valeur;
 			yyval.ens.n=yystack.l_mark[0].nom;
 			}
 break;
 case 13:
-#line 92 "ensemble.y"
+#line 108 "ensemble.y"
 	{yyval.ens.e=yystack.l_mark[0].ens.e;}
 break;
 case 14:
-#line 95 "ensemble.y"
+#line 111 "ensemble.y"
 	{ }
 break;
 case 15:
-#line 96 "ensemble.y"
+#line 112 "ensemble.y"
 	{yyval.ens.e=yystack.l_mark[0].ens.e;}
 break;
 case 16:
-#line 99 "ensemble.y"
+#line 115 "ensemble.y"
 	{yyval.ens.e=my_union(yyval.ens.e,yystack.l_mark[0].val);}
 break;
 case 17:
-#line 100 "ensemble.y"
+#line 116 "ensemble.y"
 	{
 											yyval.ens.e=my_union(my_union(yyval.ens.e,yystack.l_mark[-1].val),yystack.l_mark[0].ens.e);/*Noter $2 et non $3*/
 											}
 break;
-#line 549 "y.tab.c"
+#line 565 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

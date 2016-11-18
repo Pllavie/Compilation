@@ -4,12 +4,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ensemble.h"
-#include "y.tab.h"
 int yylex();
 void yyerror (char const *s) {
 fprintf (stderr, "%s\n", s);
  }
 ensemble tab[1024];
+#define SIZE 1024 //Taille suffisante pour éviter les collision (en fonction du nombre d'identificateur)
+
+void initTable(ensemble* tab){
+	int i = 0;
+	while(i < SIZE){
+		tab[i] = new_ensemble('o',0);
+		i++;
+	}
+}
+
+void printTable(ensemble* tab){
+	printf("PRINT TABLE");
+	int i = 0;
+	while(i < SIZE){
+		if(tab[i]->nom!='o') print_ensemble(tab[i]);
+		i++;
+	}
+}
 %}
 
 
@@ -104,7 +121,7 @@ listeElements:	NUMBER {$<ens.e>$=my_union($<ens.e>$,$<val>1);}
 
 
 %%
-int main(int argc, char *argv[])
+int main()
 {
 	initTable(tab);
     printf("Entrez une chaine :\n");

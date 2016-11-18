@@ -2,7 +2,6 @@
 
 ensemble new_ensemble(char n,unsigned int v)
 {
-	int i;
 	ensemble res = malloc(sizeof(ensemble));
 	if (n!='o')
 	{
