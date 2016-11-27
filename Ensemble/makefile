@@ -11,14 +11,14 @@ TYPE = .out
 BIN = $(PROJECT)$(TYPE)
 DOUT =
 OBJS = ensemble.o
-EXECY = ensemble.y
-EXECL = ensemble.l
+EXECY = ensembleV2.y
+EXECL = ensembleV2.l
 LEX = lex
 YACC = yacc -d
 SRC =
 DEPS = ensemble.h
 CFLAGS = -W -Wall
-LDFLAGS = -lfl $(CFLAGS)
+LDFLAGS = -ly -lfl
 
 # Création de l'executable Out
 all: lex.yy.c y.tab.c $(OBJS)
@@ -26,7 +26,7 @@ all: lex.yy.c y.tab.c $(OBJS)
 
 #Création du y.tab.c
 y.tab.c: $(EXECY)
-	$(YACC) $(EXECY)
+	$(YACC) $(EXECY) $(CFLAGS)
 
 #Création du lex.yy.c
 lex.yy.c: $(EXECL)
@@ -39,6 +39,3 @@ lex.yy.c: $(EXECL)
 # Suppression des fichiers temporaires
 clean:
 	rm -rf y.tab.c lex.yy.c $(OBJS)
-
-mrproper: clean
-	rm $(BIN)

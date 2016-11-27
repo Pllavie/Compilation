@@ -6,7 +6,7 @@ ensemble new_ensemble(char n,unsigned int v)
 	if (n!='o')
 	{
 	res->valeur =0b1;
-	res->valeur = res->valeur << v;
+	res->valeur = v;
 	}
 	else{
 		res->valeur =0b0;
@@ -53,7 +53,7 @@ void print_ensemble(ensemble e)
 	for(i=0;i<32;i++)
 	{
 		b = (((e->valeur >> i) & 1) == 1);
-		if (b) 
+		if (b==1) 
 			{printf(" %d,",i);}
 	}
 	printf("}\n");
